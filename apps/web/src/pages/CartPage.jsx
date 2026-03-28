@@ -31,7 +31,8 @@ const CartPage = () => {
               ...item,
               currentPrice: product.price,
               currentStock: product.stock,
-              image: product.image
+              image: product.image,
+              product: product // Guardar el objeto completo del producto
             };
           } catch (error) {
             return item;
@@ -75,9 +76,8 @@ const CartPage = () => {
   };
 
   const getProductImage = (item) => {
-    if (item.image) {
-      const product = { id: item.productId, image: item.image };
-      return pb.files.getUrl(product, item.image);
+    if (item.product && item.product.image) {
+      return pb.files.getUrl(item.product, item.product.image);
     }
     return 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=200&h=200&fit=crop';
   };

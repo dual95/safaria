@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -8,11 +7,9 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import pb from '@/lib/pocketbaseClient';
 import Header from '@/components/Header';
-
 const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
@@ -28,19 +25,15 @@ const HomePage = () => {
         setLoading(false);
       }
     };
-
     fetchFeaturedProducts();
   }, []);
-
-  const getProductImage = (product) => {
+  const getProductImage = product => {
     if (product.image) {
       return pb.files.getUrl(product, product.image);
     }
     return 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop';
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>SAFARIA - Productos Premium para tus Mascotas</title>
         <meta name="description" content="Descubre nuestra selección de alimentos y productos de alta calidad para el bienestar de tus mascotas. ProPlan, Royal Canin y más marcas premium." />
@@ -49,25 +42,20 @@ const HomePage = () => {
       <Header />
 
       <main>
-        <section 
-          className="relative min-h-[85dvh] flex items-center justify-center bg-cover bg-center"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1656360088457-86db3d21ff6f)',
-            backgroundPosition: 'center 40%'
-          }}
-        >
+        <section className="relative min-h-[85dvh] flex items-center justify-center bg-cover bg-center" style={{
+        backgroundImage: 'url(https://images.unsplash.com/photo-1656360088457-86db3d21ff6f)',
+        backgroundPosition: 'center 40%'
+      }}>
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
           
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="mb-8">
-              <img 
-                src="https://horizons-cdn.hostinger.com/892254e3-6628-4103-98f3-0faab57f3fbf/155e6059bb04da3fd440d40284f3ed23.png" 
-                alt="SAFARIA" 
-                className="h-24 md:h-32 mx-auto mb-6"
-              />
+              <img src="https://horizons-cdn.hostinger.com/892254e3-6628-4103-98f3-0faab57f3fbf/155e6059bb04da3fd440d40284f3ed23.png" alt="SAFARIA" className="h-24 md:h-32 mx-auto mb-6" />
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6" style={{letterSpacing: '-0.02em'}}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6" style={{
+            letterSpacing: '-0.02em'
+          }}>
               Productos premium para tus mascotas
             </h1>
             
@@ -91,7 +79,9 @@ const HomePage = () => {
                 <Sparkles className="h-4 w-4" />
                 Productos destacados
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" style={{letterSpacing: '-0.02em'}}>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4" style={{
+              letterSpacing: '-0.02em'
+            }}>
                 Lo mejor para tu mascota
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -99,21 +89,16 @@ const HomePage = () => {
               </p>
             </div>
 
-            {loading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {[...Array(6)].map((_, i) => (
-                  <Card key={i} className="overflow-hidden">
+            {loading ? <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {[...Array(6)].map((_, i) => <Card key={i} className="overflow-hidden">
                     <Skeleton className="h-48 w-full" />
                     <CardContent className="p-4">
                       <Skeleton className="h-6 w-3/4 mb-2" />
                       <Skeleton className="h-4 w-1/2 mb-4" />
                       <Skeleton className="h-8 w-1/3" />
                     </CardContent>
-                  </Card>
-                ))}
-              </div>
-            ) : featuredProducts.length === 0 ? (
-              <div className="text-center py-16">
+                  </Card>)}
+              </div> : featuredProducts.length === 0 ? <div className="text-center py-16">
                 <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
                   <Sparkles className="h-8 w-8 text-muted-foreground" />
                 </div>
@@ -122,17 +107,10 @@ const HomePage = () => {
                 <Link to="/catalog">
                   <Button>Ver todos los productos</Button>
                 </Link>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {featuredProducts.map((product) => (
-                  <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-200 hover:-translate-y-1 flex flex-col h-full">
+              </div> : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {featuredProducts.map(product => <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-200 hover:-translate-y-1 flex flex-col h-full">
                     <div className="aspect-square overflow-hidden bg-muted">
-                      <img 
-                        src={getProductImage(product)} 
-                        alt={product.name}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      />
+                      <img src={getProductImage(product)} alt={product.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
                     </div>
                     <CardContent className="p-4 flex-1 flex flex-col">
                       <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-snug">
@@ -154,21 +132,17 @@ const HomePage = () => {
                         </Button>
                       </Link>
                     </CardFooter>
-                  </Card>
-                ))}
-              </div>
-            )}
+                  </Card>)}
+              </div>}
 
-            {!loading && featuredProducts.length > 0 && (
-              <div className="text-center mt-12">
+            {!loading && featuredProducts.length > 0 && <div className="text-center mt-12">
                 <Link to="/catalog">
                   <Button variant="outline" size="lg" className="transition-all duration-200 active:scale-[0.98]">
                     Ver todos los productos
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-              </div>
-            )}
+              </div>}
           </div>
         </section>
 
@@ -176,11 +150,7 @@ const HomePage = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
               <div>
-                <img 
-                  src="/logo-safaria.png" 
-                  alt="SAFARIA" 
-                  className="h-16 mb-4"
-                />
+                <img src="https://horizons-cdn.hostinger.com/892254e3-6628-4103-98f3-0faab57f3fbf/image_2026-03-27_203519273-sFx5y.png" alt="SAFARIA" className="h-16 mb-4" />
                 <p className="text-sm text-white/80">
                   Productos premium para el bienestar de tus mascotas
                 </p>
@@ -207,8 +177,6 @@ const HomePage = () => {
           </div>
         </footer>
       </main>
-    </>
-  );
+    </>;
 };
-
 export default HomePage;
