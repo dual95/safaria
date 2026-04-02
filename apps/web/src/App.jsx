@@ -25,7 +25,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/secure-admin-portal-x7k9" element={<LoginPage />} />
           <Route
             path="/admin"
             element={

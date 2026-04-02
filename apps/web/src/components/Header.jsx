@@ -94,7 +94,7 @@ const Header = () => {
               </Button>
             </Link>
 
-            {isAuthenticated ? (
+            {isAuthenticated && (
               <div className="hidden md:flex items-center gap-2">
                 <Link to="/admin">
                   <Button variant="outline" size="sm">
@@ -107,12 +107,6 @@ const Header = () => {
                   Salir
                 </Button>
               </div>
-            ) : (
-              <Link to="/login" className="hidden md:block">
-                <Button variant="outline" size="sm">
-                  Admin Login
-                </Button>
-              </Link>
             )}
 
             <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -137,7 +131,7 @@ const Header = () => {
                       {link.label}
                     </Link>
                   ))}
-                  {isAuthenticated ? (
+                  {isAuthenticated && (
                     <>
                       <Link
                         to="/admin"
@@ -159,12 +153,6 @@ const Header = () => {
                         Cerrar Sesión
                       </Button>
                     </>
-                  ) : (
-                    <Link to="/login" onClick={() => setMobileOpen(false)}>
-                      <Button variant="outline" className="w-full">
-                        Admin Login
-                      </Button>
-                    </Link>
                   )}
                 </nav>
               </SheetContent>

@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children }) => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/secure-admin-portal-x7k9" replace />;
   }
 
   return children;
