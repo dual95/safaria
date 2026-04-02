@@ -9,6 +9,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Slider } from '@/components/ui/slider';
 import pb from '@/lib/pocketbaseClient';
 import Header from '@/components/Header';
 
@@ -18,6 +19,8 @@ const ProductCatalogPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 500]);
+  const [maxPrice, setMaxPrice] = useState(500);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [page, setPage] = useState(1);
@@ -26,7 +29,7 @@ const ProductCatalogPage = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, [page, searchQuery, selectedCategories, selectedBrands]);
+  }, [page, searchQuery, selectedCategories, selectedBrands, priceRange]);
 
   const fetchProducts = async () => {
     setLoading(true);
@@ -48,6 +51,9 @@ const ProductCatalogPage = () => {
         filters.push(`(${brandFilter})`);
       }
 
+      // Filtro de precio
+      filters.push(`price >= ${priceRange[0]} && price <= ${priceRange[1]}`);
+
       if (filters.length > 0) {
         filter = filters.join(' && ');
       }
@@ -66,6 +72,16 @@ const ProductCatalogPage = () => {
       const uniqueBrands = [...new Set(allProducts.map(p => p.brand).filter(Boolean))];
       setCategories(uniqueCategories);
       setBrands(uniqueBrands);
+      
+      // Calcular el precio máximo
+      const prices = allProducts.map(p => p.price);
+      const max = prices.length > 0 ? Math.ceil(Math.max(...prices)) : 500;
+      setMaxPrice(max);
+      
+      // Actualizar el rango si el máximo actual es menor que el nuevo máximo
+      if (priceRange[1] === 500 && max > 500) {
+        setPriceRange([0, max]);
+      }
     } catch (error) {
       console.error('Error fetching products:', error);
     } finally {
@@ -101,12 +117,83 @@ const ProductCatalogPage = () => {
   const clearFilters = () => {
     setSelectedCategories([]);
     setSelectedBrands([]);
+    setPriceRange([0, maxPrice]);
     setSearchQuery('');
     setPage(1);
   };
 
   const FilterSidebar = () => (
     <div className="space-y-6">
+      <div>
+        <h3 className="font-semibold text-foreground mb-3">Precio</h3>
+        <div className="space-y-4">
+          <div className="px-2 py-4">
+            <Slider
+              defaultValue={priceRange}
+              key={`${priceRange[0]}-${priceRange[1]}`}
+              onValueCommit={(value) => {
+                setPriceRange(value);
+                setPage(1);
+              }}
+              max={maxPrice}
+              min={0}
+              step={1}
+              className="w-full"
+            />
+          </div>
+          <div className="flex items-center justify-between text-sm text-muted-foreground px-2">
+            <span>${priceRange[0]} - ${priceRange[1]} USD</span>
+          </div>
+          <div className="space-y-1 text-sm text-muted-foreground">
+            <div 
+              onClick={() => {
+                setPriceRange([0, 10]);
+                setPage(1);
+              }}
+              className="cursor-pointer hover:text-foreground transition-colors py-1"
+            >
+              De 0 a 10 USD
+            </div>
+            <div 
+              onClick={() => {
+                setPriceRange([10, 15]);
+                setPage(1);
+              }}
+              className="cursor-pointer hover:text-foreground transition-colors py-1"
+            >
+              De 10 a 15 USD
+            </div>
+            <div 
+              onClick={() => {
+                setPriceRange([15, 20]);
+                setPage(1);
+              }}
+              className="cursor-pointer hover:text-foreground transition-colors py-1"
+            >
+              De 15 a 20 USD
+            </div>
+            <div 
+              onClick={() => {
+                setPriceRange([20, 30]);
+                setPage(1);
+              }}
+              className="cursor-pointer hover:text-foreground transition-colors py-1"
+            >
+              De 20 a 30 USD
+            </div>
+            <div 
+              onClick={() => {
+                setPriceRange([30, maxPrice]);
+                setPage(1);
+              }}
+              className="cursor-pointer hover:text-foreground transition-colors py-1"
+            >
+              Más de 30 USD
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div>
         <h3 className="font-semibold text-foreground mb-3">Categorías</h3>
         <div className="space-y-2">
@@ -149,7 +236,7 @@ const ProductCatalogPage = () => {
         </div>
       </div>
 
-      {(selectedCategories.length > 0 || selectedBrands.length > 0) && (
+      {(selectedCategories.length > 0 || selectedBrands.length > 0 || priceRange[0] !== 0 || priceRange[1] !== maxPrice) && (
         <Button variant="outline" onClick={clearFilters} className="w-full">
           <X className="h-4 w-4 mr-2" />
           Limpiar filtros
