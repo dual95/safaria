@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -129,24 +129,25 @@ const CheckoutPage = () => {
 
         <Header />
 
-        <main className="min-h-screen bg-background py-12">
+        <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 py-12">
           <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Card className="text-center p-8">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle2 className="h-10 w-10 text-primary" />
-              </div>
-              <h1 className="text-3xl font-bold text-foreground mb-4" style={{letterSpacing: '-0.02em'}}>
-                Orden confirmada
-              </h1>
-              <p className="text-lg text-muted-foreground mb-2">
-                Tu orden ha sido recibida exitosamente
-              </p>
-              <p className="text-sm text-muted-foreground mb-8">
-                Número de orden: <span className="font-mono font-semibold text-foreground">{orderId}</span>
-              </p>
+            <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm shadow-xl">
+              <div className="text-center py-16 px-4">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center mx-auto mb-6 ring-8 ring-primary/10">
+                  <CheckCircle2 className="h-10 w-10 text-primary" />
+                </div>
+                <h1 className="text-3xl font-bold text-foreground mb-4" style={{letterSpacing: '-0.02em'}}>
+                  Orden confirmada
+                </h1>
+                <p className="text-lg text-muted-foreground mb-2">
+                  Tu orden ha sido recibida exitosamente
+                </p>
+                <p className="text-sm text-muted-foreground mb-8">
+                  Número de orden: <span className="font-mono font-semibold text-foreground">{orderId}</span>
+                </p>
 
-              <div className="bg-muted rounded-xl p-6 mb-8 text-left">
-                <h2 className="font-semibold text-foreground mb-4">Detalles de la orden</h2>
+              <div className="bg-gradient-to-br from-muted/50 to-muted/20 rounded-xl p-6 mb-8 text-left border border-border/50">
+                <h2 className="font-semibold text-foreground mb-4 text-lg">Detalles de la orden</h2>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Subtotal</span>
@@ -159,7 +160,7 @@ const CheckoutPage = () => {
                   <div className="border-t border-border pt-2 mt-2">
                     <div className="flex justify-between text-base">
                       <span className="font-semibold text-foreground">Total</span>
-                      <span className="font-bold text-primary">${total.toFixed(2)}</span>
+                      <span className="font-bold text-primary text-xl">${total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -169,9 +170,10 @@ const CheckoutPage = () => {
                 Recibirás un email de confirmación en {formData.customer_email}
               </p>
 
-              <Button onClick={() => navigate('/')} className="transition-all duration-200 active:scale-[0.98]">
+              <Button onClick={() => navigate('/')} className="transition-all duration-200 active:scale-[0.98] shadow-lg hover:shadow-xl">
                 Volver al inicio
               </Button>
+              </div>
             </Card>
           </div>
         </main>
@@ -188,7 +190,7 @@ const CheckoutPage = () => {
 
       <Header />
 
-      <main className="min-h-screen bg-background py-12">
+      <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8" style={{letterSpacing: '-0.02em'}}>
             Finalizar compra
@@ -196,7 +198,7 @@ const CheckoutPage = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              <Card>
+              <Card className="border-2 border-border/50 bg-card/80 backdrop-blur-sm shadow-lg">
                 <CardHeader>
                   <CardTitle>Información de envío</CardTitle>
                 </CardHeader>
@@ -293,7 +295,7 @@ const CheckoutPage = () => {
                       type="submit"
                       size="lg"
                       disabled={loading}
-                      className="w-full transition-all duration-200 active:scale-[0.98]"
+                      className="w-full transition-all duration-200 active:scale-[0.98] shadow-lg hover:shadow-xl text-base font-semibold py-6"
                     >
                       {loading ? 'Procesando...' : 'Confirmar orden'}
                     </Button>
@@ -303,11 +305,14 @@ const CheckoutPage = () => {
             </div>
 
             <div className="lg:col-span-1">
-              <Card className="sticky top-24">
-                <CardHeader>
-                  <CardTitle>Resumen del pedido</CardTitle>
+              <Card className="sticky top-24 border-2 border-border/50 bg-card/80 backdrop-blur-sm shadow-xl">
+                <CardHeader className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border-b border-border/50">
+                  <CardTitle className="flex items-center gap-2">
+                    <ShoppingCart className="h-5 w-5 text-primary" />
+                    Resumen del pedido
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-6">
                   <div className="space-y-3 mb-6">
                     {cartItems.map((item) => (
                       <div key={item.productId} className="flex justify-between text-sm">
@@ -322,18 +327,21 @@ const CheckoutPage = () => {
                   </div>
 
                   <div className="space-y-2 border-t border-border pt-4">
-                    <div className="flex justify-between text-foreground">
-                      <span>Subtotal</span>
-                      <span className="font-semibold">${subtotal.toFixed(2)}</span>
+                    <div className="flex justify-between text-foreground items-center py-2">
+                      <span className="text-muted-foreground">Subtotal</span>
+                      <span className="font-bold">${subtotal.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between text-foreground">
-                      <span>IVA (12%)</span>
-                      <span className="font-semibold">${tax.toFixed(2)}</span>
+                    <div className="flex justify-between text-foreground items-center py-2">
+                      <span className="text-muted-foreground">IVA (12%)</span>
+                      <span className="font-bold">${tax.toFixed(2)}</span>
                     </div>
-                    <div className="border-t border-border pt-2">
-                      <div className="flex justify-between text-lg font-bold">
-                        <span className="text-foreground">Total</span>
-                        <span className="text-primary">${total.toFixed(2)}</span>
+                    <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-4 mt-4">
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg font-semibold text-foreground">Total</span>
+                        <div className="text-right">
+                          <div className="text-2xl font-bold text-primary">${total.toFixed(2)}</div>
+                          <div className="text-xs text-muted-foreground mt-1">IVA incluido</div>
+                        </div>
                       </div>
                     </div>
                   </div>

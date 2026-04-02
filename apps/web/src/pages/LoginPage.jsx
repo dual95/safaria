@@ -80,11 +80,11 @@ const LoginPage = () => {
 
       <Header />
 
-      <main className="min-h-screen bg-background flex items-center justify-center py-12 px-4">
-        <Card className="w-full max-w-md">
+      <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 flex items-center justify-center py-12 px-4">
+        <Card className="w-full max-w-md border-2 border-border/50 bg-card/80 backdrop-blur-sm shadow-xl">
           <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <LogIn className="h-8 w-8 text-primary" />
+            <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center mx-auto mb-4 ring-8 ring-primary/10">
+              <LogIn className="h-10 w-10 text-primary" />
             </div>
             <CardTitle className="text-2xl">Acceso administrativo</CardTitle>
             <CardDescription>
@@ -128,13 +128,13 @@ const LoginPage = () => {
                 type="submit"
                 size="lg"
                 disabled={loading}
-                className="w-full transition-all duration-200 active:scale-[0.98]"
+                className="w-full transition-all duration-200 active:scale-[0.98] shadow-lg hover:shadow-xl"
               >
                 {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
               </Button>
             </form>
 
-            <div className="mt-6 p-4 bg-muted rounded-lg">
+            <div className="mt-6 p-4 bg-gradient-to-br from-muted/50 to-muted/20 rounded-lg border border-border/50">
               <p className="text-xs text-muted-foreground text-center">
                 Credenciales de prueba:<br />
                 <span className="font-mono text-foreground">admin@safaria.com</span> / <span className="font-mono text-foreground">admin123</span>

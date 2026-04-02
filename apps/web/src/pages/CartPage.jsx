@@ -90,12 +90,40 @@ const CartPage = () => {
     return (
       <>
         <Header />
-        <main className="min-h-screen bg-background py-12">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="animate-pulse space-y-4">
-              <div className="h-8 bg-muted rounded w-1/4"></div>
-              <div className="h-32 bg-muted rounded"></div>
-              <div className="h-32 bg-muted rounded"></div>
+        <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 py-12">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-12">
+              <div className="h-10 bg-muted/50 rounded-lg w-64 mb-3 animate-pulse"></div>
+              <div className="h-5 bg-muted/50 rounded w-48 animate-pulse"></div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2 space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <Card key={i} className="animate-pulse border-border/50">
+                    <CardContent className="p-6">
+                      <div className="flex gap-6">
+                        <div className="w-28 h-28 bg-muted/50 rounded-xl"></div>
+                        <div className="flex-1 space-y-3">
+                          <div className="h-6 bg-muted/50 rounded w-3/4"></div>
+                          <div className="h-4 bg-muted/50 rounded w-1/4"></div>
+                          <div className="h-8 bg-muted/50 rounded w-1/3"></div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              <div className="lg:col-span-1">
+                <Card className="border-2 border-border/50">
+                  <div className="p-6 space-y-4 animate-pulse">
+                    <div className="h-8 bg-muted/50 rounded w-1/2"></div>
+                    <div className="h-6 bg-muted/50 rounded"></div>
+                    <div className="h-6 bg-muted/50 rounded"></div>
+                    <div className="h-12 bg-muted/50 rounded"></div>
+                    <div className="h-14 bg-muted/50 rounded"></div>
+                  </div>
+                </Card>
+              </div>
             </div>
           </div>
         </main>
@@ -112,23 +140,31 @@ const CartPage = () => {
 
       <Header />
 
-      <main className="min-h-screen bg-background py-12">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8" style={{letterSpacing: '-0.02em'}}>
-            Carrito de compras
-          </h1>
+      <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-12">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2" style={{letterSpacing: '-0.02em'}}>
+              Carrito de compras
+            </h1>
+            <p className="text-muted-foreground">
+              {cartItems.length > 0 ? `${cartItems.length} ${cartItems.length === 1 ? 'producto' : 'productos'} en tu carrito` : 'Tu carrito está vacío'}
+            </p>
+          </div>
 
           {cartItems.length === 0 ? (
-            <Card className="p-12">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                  <ShoppingCart className="h-8 w-8 text-muted-foreground" />
+            <Card className="border-2 border-dashed border-border/50 bg-card/50 backdrop-blur-sm">
+              <div className="text-center py-16 px-4">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center mx-auto mb-6 ring-8 ring-primary/5">
+                  <ShoppingCart className="h-10 w-10 text-primary" />
                 </div>
-                <h2 className="text-xl font-semibold text-foreground mb-2">Tu carrito está vacío</h2>
-                <p className="text-muted-foreground mb-6">Agrega productos para comenzar tu compra</p>
+                <h2 className="text-2xl font-bold text-foreground mb-3">Tu carrito está vacío</h2>
+                <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+                  Descubre nuestros productos y comienza a crear tu pedido perfecto
+                </p>
                 <Link to="/catalog">
-                  <Button className="transition-all duration-200 active:scale-[0.98]">
-                    Ver catálogo
+                  <Button size="lg" className="transition-all duration-200 active:scale-[0.98] shadow-lg hover:shadow-xl">
+                    Explorar productos
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
               </div>
@@ -137,62 +173,69 @@ const CartPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-4">
                 {cartItems.map((item) => (
-                  <Card key={item.productId}>
-                    <CardContent className="p-4">
-                      <div className="flex gap-4">
-                        <div className="w-24 h-24 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                  <Card key={item.productId} className="group overflow-hidden hover:shadow-xl transition-all duration-300 border-border/50 bg-card/80 backdrop-blur-sm">
+                    <CardContent className="p-6">
+                      <div className="flex gap-6">
+                        <div className="w-28 h-28 rounded-xl overflow-hidden bg-muted flex-shrink-0 ring-1 ring-border/50 group-hover:ring-primary/20 transition-all duration-300">
                           <img 
                             src={getProductImage(item)} 
                             alt={item.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                         </div>
 
                         <div className="flex-1 min-w-0">
                           <Link to={`/product/${item.productId}`}>
-                            <h3 className="font-semibold text-foreground hover:text-primary transition-colors duration-200 line-clamp-2">
+                            <h3 className="font-bold text-lg text-foreground hover:text-primary transition-colors duration-200 line-clamp-2 mb-2">
                               {item.name}
                             </h3>
                           </Link>
-                          <p className="text-sm text-muted-foreground mt-1">
-                            SKU: {item.sku}
+                          <p className="text-sm text-muted-foreground mb-4 flex items-center gap-2">
+                            <span className="px-2 py-0.5 bg-muted rounded-md text-xs font-medium">
+                              SKU: {item.sku}
+                            </span>
                           </p>
-                          <p className="text-lg font-bold text-primary mt-2">
-                            ${(item.currentPrice || item.price).toFixed(2)}
-                          </p>
+                          <div className="flex items-baseline gap-2">
+                            <p className="text-2xl font-bold text-primary">
+                              ${(item.currentPrice || item.price).toFixed(2)}
+                            </p>
+                            <span className="text-sm text-muted-foreground">
+                              c/u
+                            </span>
+                          </div>
                         </div>
 
-                        <div className="flex flex-col items-end justify-between">
+                        <div className="flex flex-col items-end justify-between gap-4">
                           <Button
                             variant="ghost"
                             size="icon"
                             onClick={() => removeItem(item.productId)}
-                            className="text-destructive hover:text-destructive hover:bg-destructive/10 transition-all duration-200 active:scale-[0.98]"
+                            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all duration-200 active:scale-[0.95] rounded-full"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
 
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1 border border-border/50">
                             <Button
-                              variant="outline"
+                              variant="ghost"
                               size="icon"
                               onClick={() => updateQuantity(item.productId, item.quantity - 1)}
                               disabled={item.quantity <= 1}
-                              className="h-8 w-8 transition-all duration-200 active:scale-[0.98]"
+                              className="h-9 w-9 rounded-full hover:bg-background transition-all duration-200 active:scale-[0.95]"
                             >
-                              <Minus className="h-3 w-3" />
+                              <Minus className="h-3.5 w-3.5" />
                             </Button>
-                            <span className="w-8 text-center font-semibold text-foreground">
+                            <span className="w-12 text-center font-bold text-foreground text-lg">
                               {item.quantity}
                             </span>
                             <Button
-                              variant="outline"
+                              variant="ghost"
                               size="icon"
                               onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                               disabled={item.quantity >= 99}
-                              className="h-8 w-8 transition-all duration-200 active:scale-[0.98]"
+                              className="h-9 w-9 rounded-full hover:bg-background transition-all duration-200 active:scale-[0.95]"
                             >
-                              <Plus className="h-3 w-3" />
+                              <Plus className="h-3.5 w-3.5" />
                             </Button>
                           </div>
                         </div>
@@ -203,23 +246,35 @@ const CartPage = () => {
               </div>
 
               <div className="lg:col-span-1">
-                <Card className="sticky top-24">
+                <Card className="sticky top-24 overflow-hidden border-2 border-border/50 bg-card/80 backdrop-blur-sm shadow-xl">
+                  <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-6 border-b border-border/50">
+                    <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
+                      <ShoppingCart className="h-6 w-6 text-primary" />
+                      Resumen
+                    </h2>
+                  </div>
+                  
                   <CardContent className="p-6">
-                    <h2 className="text-xl font-semibold text-foreground mb-6">Resumen del pedido</h2>
-
-                    <div className="space-y-3 mb-6">
-                      <div className="flex justify-between text-foreground">
-                        <span>Subtotal</span>
-                        <span className="font-semibold">${subtotal.toFixed(2)}</span>
+                    <div className="space-y-4 mb-6">
+                      <div className="flex justify-between text-foreground items-center py-3 border-b border-dashed border-border/50">
+                        <span className="text-muted-foreground">Subtotal</span>
+                        <span className="font-bold text-lg">${subtotal.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-foreground">
-                        <span>IVA (12%)</span>
-                        <span className="font-semibold">${tax.toFixed(2)}</span>
+                      <div className="flex justify-between text-foreground items-center py-3 border-b border-dashed border-border/50">
+                        <span className="text-muted-foreground">IVA (12%)</span>
+                        <span className="font-bold text-lg">${tax.toFixed(2)}</span>
                       </div>
-                      <div className="border-t border-border pt-3">
-                        <div className="flex justify-between text-lg font-bold text-foreground">
-                          <span>Total</span>
-                          <span className="text-primary">${total.toFixed(2)}</span>
+                      <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-4 mt-6">
+                        <div className="flex justify-between items-center">
+                          <span className="text-lg font-semibold text-foreground">Total</span>
+                          <div className="text-right">
+                            <div className="text-3xl font-bold text-primary">
+                              ${total.toFixed(2)}
+                            </div>
+                            <div className="text-xs text-muted-foreground mt-1">
+                              IVA incluido
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -228,13 +283,17 @@ const CartPage = () => {
                       <Button
                         size="lg"
                         onClick={() => navigate('/checkout')}
-                        className="w-full transition-all duration-200 active:scale-[0.98]"
+                        className="w-full transition-all duration-200 active:scale-[0.98] shadow-lg hover:shadow-xl text-base font-semibold py-6"
                       >
                         Proceder al pago
                         <ArrowRight className="ml-2 h-5 w-5" />
                       </Button>
                       <Link to="/catalog">
-                        <Button variant="outline" size="lg" className="w-full transition-all duration-200 active:scale-[0.98]">
+                        <Button 
+                          variant="outline" 
+                          size="lg" 
+                          className="w-full transition-all duration-200 active:scale-[0.98] border-2 hover:bg-muted/50"
+                        >
                           Continuar comprando
                         </Button>
                       </Link>

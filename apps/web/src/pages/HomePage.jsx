@@ -72,10 +72,10 @@ const HomePage = () => {
           </div>
         </section>
 
-        <section className="py-20 bg-background">
+        <section className="py-20 bg-gradient-to-b from-background to-muted/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/20 to-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4 ring-2 ring-primary/10">
                 <Sparkles className="h-4 w-4" />
                 Productos destacados
               </div>
@@ -90,7 +90,7 @@ const HomePage = () => {
             </div>
 
             {loading ? <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {[...Array(6)].map((_, i) => <Card key={i} className="overflow-hidden">
+                {[...Array(6)].map((_, i) => <Card key={i} className="overflow-hidden border-border/50 bg-card/80 backdrop-blur-sm">
                     <Skeleton className="h-48 w-full" />
                     <CardContent className="p-4">
                       <Skeleton className="h-6 w-3/4 mb-2" />
@@ -105,19 +105,19 @@ const HomePage = () => {
                 <h3 className="text-xl font-semibold text-foreground mb-2">No hay productos destacados</h3>
                 <p className="text-muted-foreground mb-6">Pronto agregaremos productos a esta sección</p>
                 <Link to="/catalog">
-                  <Button>Ver todos los productos</Button>
+                  <Button className="shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98]">Ver todos los productos</Button>
                 </Link>
               </div> : <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {featuredProducts.map(product => <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-200 hover:-translate-y-1 flex flex-col h-full">
-                    <div className="aspect-square overflow-hidden bg-muted">
-                      <img src={getProductImage(product)} alt={product.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                {featuredProducts.map(product => <Card key={product.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full border-border/50 bg-card/80 backdrop-blur-sm">
+                    <div className="aspect-square overflow-hidden bg-muted ring-1 ring-border/50 group-hover:ring-primary/20 transition-all duration-300">
+                      <img src={getProductImage(product)} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                     </div>
                     <CardContent className="p-4 flex-1 flex flex-col">
-                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-snug">
+                      <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-snug group-hover:text-primary transition-colors duration-200">
                         {product.name}
                       </h3>
                       <p className="text-sm text-muted-foreground mb-3">
-                        SKU: {product.sku}
+                        <span className="px-2 py-0.5 bg-muted rounded-md text-xs font-medium">SKU: {product.sku}</span>
                       </p>
                       <div className="mt-auto">
                         <p className="text-2xl font-bold text-primary">
@@ -127,7 +127,7 @@ const HomePage = () => {
                     </CardContent>
                     <CardFooter className="p-4 pt-0">
                       <Link to={`/product/${product.id}`} className="w-full">
-                        <Button className="w-full transition-all duration-200 active:scale-[0.98]">
+                        <Button className="w-full transition-all duration-200 active:scale-[0.98] shadow-md hover:shadow-lg">
                           Ver detalles
                         </Button>
                       </Link>
@@ -137,7 +137,7 @@ const HomePage = () => {
 
             {!loading && featuredProducts.length > 0 && <div className="text-center mt-12">
                 <Link to="/catalog">
-                  <Button variant="outline" size="lg" className="transition-all duration-200 active:scale-[0.98]">
+                  <Button variant="outline" size="lg" className="transition-all duration-200 active:scale-[0.98] border-2 hover:bg-muted/50 shadow-md hover:shadow-lg">
                     Ver todos los productos
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>

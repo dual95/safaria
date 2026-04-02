@@ -254,7 +254,7 @@ const ProductCatalogPage = () => {
 
       <Header />
 
-      <main className="min-h-screen bg-background py-12">
+      <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4" style={{letterSpacing: '-0.02em'}}>
@@ -300,7 +300,7 @@ const ProductCatalogPage = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             <aside className="hidden lg:block">
-              <div className="sticky top-24 bg-card rounded-xl p-6 border border-border">
+              <div className="sticky top-24 bg-card/80 backdrop-blur-sm rounded-xl p-6 border-2 border-border/50 shadow-lg">
                 <h2 className="text-lg font-semibold text-foreground mb-4">Filtros</h2>
                 <FilterSidebar />
               </div>
@@ -310,7 +310,7 @@ const ProductCatalogPage = () => {
               {loading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                   {[...Array(6)].map((_, i) => (
-                    <Card key={i} className="overflow-hidden">
+                    <Card key={i} className="overflow-hidden border-border/50 bg-card/80 backdrop-blur-sm">
                       <Skeleton className="h-48 w-full" />
                       <CardContent className="p-4">
                         <Skeleton className="h-6 w-3/4 mb-2" />
@@ -321,32 +321,34 @@ const ProductCatalogPage = () => {
                   ))}
                 </div>
               ) : products.length === 0 ? (
-                <div className="text-center py-16">
-                  <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Search className="h-8 w-8 text-muted-foreground" />
+                <Card className="border-2 border-dashed border-border/50 bg-card/50 backdrop-blur-sm">
+                  <div className="text-center py-16">
+                    <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full flex items-center justify-center mx-auto mb-6 ring-8 ring-primary/5">
+                      <Search className="h-10 w-10 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">No se encontraron productos</h3>
+                    <p className="text-muted-foreground mb-6">Intenta ajustar tus filtros o búsqueda</p>
+                    <Button onClick={clearFilters} className="shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98]">Limpiar filtros</Button>
                   </div>
-                  <h3 className="text-xl font-semibold text-foreground mb-2">No se encontraron productos</h3>
-                  <p className="text-muted-foreground mb-6">Intenta ajustar tus filtros o búsqueda</p>
-                  <Button onClick={clearFilters}>Limpiar filtros</Button>
-                </div>
+                </Card>
               ) : (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                     {products.map((product) => (
-                      <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-200 hover:-translate-y-1 flex flex-col h-full">
-                        <div className="aspect-square overflow-hidden bg-muted">
+                      <Card key={product.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col h-full border-border/50 bg-card/80 backdrop-blur-sm">
+                        <div className="aspect-square overflow-hidden bg-muted ring-1 ring-border/50 group-hover:ring-primary/20 transition-all duration-300">
                           <img 
                             src={getProductImage(product)} 
                             alt={product.name}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                         </div>
                         <CardContent className="p-4 flex-1 flex flex-col">
-                          <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-snug">
+                          <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-snug group-hover:text-primary transition-colors duration-200">
                             {product.name}
                           </h3>
                           <p className="text-sm text-muted-foreground mb-3">
-                            SKU: {product.sku}
+                            <span className="px-2 py-0.5 bg-muted rounded-md text-xs font-medium">SKU: {product.sku}</span>
                           </p>
                           <div className="mt-auto">
                             <p className="text-2xl font-bold text-primary">
@@ -356,7 +358,7 @@ const ProductCatalogPage = () => {
                         </CardContent>
                         <CardFooter className="p-4 pt-0">
                           <Link to={`/product/${product.id}`} className="w-full">
-                            <Button className="w-full transition-all duration-200 active:scale-[0.98]">
+                            <Button className="w-full transition-all duration-200 active:scale-[0.98] shadow-md hover:shadow-lg">
                               Ver detalles
                             </Button>
                           </Link>
@@ -366,16 +368,17 @@ const ProductCatalogPage = () => {
                   </div>
 
                   {totalPages > 1 && (
-                    <div className="flex justify-center gap-2 mt-8">
+                    <div className="flex justify-center items-center gap-2 mt-8">
                       <Button
                         variant="outline"
                         onClick={() => setPage(p => Math.max(1, p - 1))}
                         disabled={page === 1}
+                        className="shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.98]"
                       >
                         Anterior
                       </Button>
                       <div className="flex items-center gap-2 px-4">
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-sm font-medium text-foreground">
                           Página {page} de {totalPages}
                         </span>
                       </div>
@@ -383,6 +386,7 @@ const ProductCatalogPage = () => {
                         variant="outline"
                         onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                         disabled={page === totalPages}
+                        className="shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.98]"
                       >
                         Siguiente
                       </Button>

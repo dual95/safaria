@@ -120,17 +120,17 @@ const ProductDetailPage = () => {
 
       <Header />
 
-      <main className="min-h-screen bg-background py-12">
+      <main className="min-h-screen bg-gradient-to-b from-background to-muted/20 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link to="/catalog">
-            <Button variant="ghost" className="mb-8 transition-all duration-200 active:scale-[0.98]">
+            <Button variant="ghost" className="mb-8 transition-all duration-200 active:scale-[0.98] hover:bg-muted/50">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Volver al catálogo
             </Button>
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-            <div className="aspect-square rounded-2xl overflow-hidden bg-muted">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-muted ring-2 ring-border/50 shadow-xl">
               <img 
                 src={getProductImage(product)} 
                 alt={product.name}
@@ -144,7 +144,7 @@ const ProductDetailPage = () => {
               </h1>
 
               <div className="flex items-center gap-4 mb-6">
-                <span className="text-sm text-muted-foreground">SKU: {product.sku}</span>
+                <span className="px-3 py-1 bg-muted rounded-full text-sm font-medium text-muted-foreground">SKU: {product.sku}</span>
               </div>
 
               <div className="mb-6">
@@ -164,7 +164,7 @@ const ProductDetailPage = () => {
 
               {product.category && (
                 <div className="mb-8">
-                  <span className="inline-block bg-muted text-foreground px-3 py-1 rounded-full text-sm font-medium">
+                  <span className="inline-block bg-gradient-to-r from-primary/10 to-primary/5 text-primary px-4 py-2 rounded-full text-sm font-medium ring-2 ring-primary/10">
                     {product.category}
                   </span>
                 </div>
@@ -173,25 +173,25 @@ const ProductDetailPage = () => {
               <div className="mt-auto space-y-4">
                 <div className="flex items-center gap-4">
                   <span className="text-sm font-medium text-foreground">Cantidad:</span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1 border border-border/50">
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="icon"
                       onClick={decrementQuantity}
                       disabled={quantity <= 1}
-                      className="transition-all duration-200 active:scale-[0.98]"
+                      className="h-9 w-9 rounded-full hover:bg-background transition-all duration-200 active:scale-[0.95]"
                     >
                       <Minus className="h-4 w-4" />
                     </Button>
-                    <span className="w-12 text-center font-semibold text-foreground">
+                    <span className="w-12 text-center font-bold text-foreground text-lg">
                       {quantity}
                     </span>
                     <Button
-                      variant="outline"
+                      variant="ghost"
                       size="icon"
                       onClick={incrementQuantity}
                       disabled={quantity >= 99}
-                      className="transition-all duration-200 active:scale-[0.98]"
+                      className="h-9 w-9 rounded-full hover:bg-background transition-all duration-200 active:scale-[0.95]"
                     >
                       <Plus className="h-4 w-4" />
                     </Button>
@@ -201,7 +201,7 @@ const ProductDetailPage = () => {
                 <Button
                   size="lg"
                   onClick={addToCart}
-                  className="w-full transition-all duration-200 active:scale-[0.98]"
+                  className="w-full transition-all duration-200 active:scale-[0.98] shadow-lg hover:shadow-xl text-base font-semibold py-6"
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Agregar al carrito
@@ -217,17 +217,17 @@ const ProductDetailPage = () => {
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {relatedProducts.map((relatedProduct) => (
-                  <Card key={relatedProduct.id} className="overflow-hidden hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+                  <Card key={relatedProduct.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-border/50 bg-card/80 backdrop-blur-sm">
                     <Link to={`/product/${relatedProduct.id}`}>
-                      <div className="aspect-square overflow-hidden bg-muted">
+                      <div className="aspect-square overflow-hidden bg-muted ring-1 ring-border/50 group-hover:ring-primary/20 transition-all duration-300">
                         <img 
                           src={getProductImage(relatedProduct)} 
                           alt={relatedProduct.name}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         />
                       </div>
                       <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-snug">
+                        <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-snug group-hover:text-primary transition-colors duration-200">
                           {relatedProduct.name}
                         </h3>
                         <p className="text-xl font-bold text-primary">
