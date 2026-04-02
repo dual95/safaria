@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Minus, Plus, Package } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Minus, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -145,14 +145,6 @@ const ProductDetailPage = () => {
 
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-sm text-muted-foreground">SKU: {product.sku}</span>
-                {product.stock > 0 ? (
-                  <span className="inline-flex items-center gap-1 text-sm text-primary font-medium">
-                    <Package className="h-4 w-4" />
-                    {product.stock} en stock
-                  </span>
-                ) : (
-                  <span className="text-sm text-destructive font-medium">Agotado</span>
-                )}
               </div>
 
               <div className="mb-6">
@@ -198,7 +190,7 @@ const ProductDetailPage = () => {
                       variant="outline"
                       size="icon"
                       onClick={incrementQuantity}
-                      disabled={quantity >= product.stock}
+                      disabled={quantity >= 99}
                       className="transition-all duration-200 active:scale-[0.98]"
                     >
                       <Plus className="h-4 w-4" />
@@ -209,7 +201,6 @@ const ProductDetailPage = () => {
                 <Button
                   size="lg"
                   onClick={addToCart}
-                  disabled={product.stock === 0}
                   className="w-full transition-all duration-200 active:scale-[0.98]"
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />

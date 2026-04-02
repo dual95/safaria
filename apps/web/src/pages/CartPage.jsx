@@ -57,7 +57,7 @@ const CartPage = () => {
   const updateQuantity = (productId, newQuantity) => {
     const item = cartItems.find(i => i.productId === productId);
     if (item && newQuantity > item.currentStock) {
-      toast.error('Cantidad no disponible en stock');
+      toast.error('Cantidad máxima alcanzada');
       return;
     }
 
@@ -189,7 +189,7 @@ const CartPage = () => {
                               variant="outline"
                               size="icon"
                               onClick={() => updateQuantity(item.productId, item.quantity + 1)}
-                              disabled={item.quantity >= item.currentStock}
+                              disabled={item.quantity >= 99}
                               className="h-8 w-8 transition-all duration-200 active:scale-[0.98]"
                             >
                               <Plus className="h-3 w-3" />

@@ -345,18 +345,9 @@ const ProductCatalogPage = () => {
                           <h3 className="font-semibold text-foreground mb-2 line-clamp-2 leading-snug">
                             {product.name}
                           </h3>
-                          <p className="text-sm text-muted-foreground mb-1">
+                          <p className="text-sm text-muted-foreground mb-3">
                             SKU: {product.sku}
                           </p>
-                          {product.stock > 0 ? (
-                            <p className="text-xs text-primary mb-3">
-                              En stock: {product.stock} unidades
-                            </p>
-                          ) : (
-                            <p className="text-xs text-destructive mb-3">
-                              Agotado
-                            </p>
-                          )}
                           <div className="mt-auto">
                             <p className="text-2xl font-bold text-primary">
                               ${product.price.toFixed(2)}
