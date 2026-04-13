@@ -5,6 +5,9 @@ const pool   = require('../db');
 // Columnas permitidas para ORDER BY (previene SQL injection)
 const SORT_COLUMNS = { created: 'created', updated: 'updated', name: 'name', price: 'price', sku: 'sku' };
 
+// MySQL devuelve DECIMAL como string — convertir a número
+const parseProduct = (p) => ({ ...p, price: parseFloat(p.price) });
+
 function parseSort(sort = '-created') {
   const dir = sort.startsWith('-') ? 'DESC' : 'ASC';
   const col = SORT_COLUMNS[sort.replace('-', '')] || 'created';
@@ -69,7 +72,7 @@ router.get('/', async (req, res) => {
     );
 
     res.json({
-      items:      rows,
+      items:      rows.map(parseProduct),
       totalItems: total,
       totalPages: Math.ceil(total / perPage),
       page,
@@ -103,7 +106,7 @@ router.get('/all', async (req, res) => {
       `SELECT * FROM products ${where} ORDER BY ${order}`, params
     );
 
-    res.json(rows);
+    res.json(rows.map(parseProduct));
   } catch (err) {
     console.error('GET /products/all:', err);
     res.status(500).json({ message: 'Error al obtener productos' });
@@ -117,7 +120,7 @@ router.get('/:id', async (req, res) => {
   try {
     const [[product]] = await pool.query('SELECT * FROM products WHERE id = ?', [req.params.id]);
     if (!product) return res.status(404).json({ message: 'Producto no encontrado' });
-    res.json(product);
+    res.json(parseProduct(product));
   } catch (err) {
     console.error('GET /products/:id:', err);
     res.status(500).json({ message: 'Error al obtener producto' });
