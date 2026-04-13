@@ -14,9 +14,8 @@ const HomePage = () => {
     const fetchFeaturedProducts = async () => {
       try {
         const products = await pb.collection('products').getFullList({
-          filter: 'featured = true',
           sort: '-created',
-          $autoCancel: false
+          _params: { featured: 'true' },
         });
         setFeaturedProducts(products.slice(0, 6));
       } catch (error) {

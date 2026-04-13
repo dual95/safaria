@@ -34,34 +34,15 @@ const ProductCatalogPage = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      let filter = '';
-      const filters = [];
-
-      if (searchQuery) {
-        filters.push(`(name ~ "${searchQuery}" || sku ~ "${searchQuery}" || description ~ "${searchQuery}")`);
-      }
-
-      if (selectedCategories.length > 0) {
-        const categoryFilter = selectedCategories.map(cat => `category = "${cat}"`).join(' || ');
-        filters.push(`(${categoryFilter})`);
-      }
-
-      if (selectedBrands.length > 0) {
-        const brandFilter = selectedBrands.map(brand => `brand = "${brand}"`).join(' || ');
-        filters.push(`(${brandFilter})`);
-      }
-
-      // Filtro de precio
-      filters.push(`price >= ${priceRange[0]} && price <= ${priceRange[1]}`);
-
-      if (filters.length > 0) {
-        filter = filters.join(' && ');
-      }
-
       const result = await pb.collection('products').getList(page, perPage, {
-        filter: filter || undefined,
         sort: '-created',
-        $autoCancel: false
+        _params: {
+          search:     searchQuery || undefined,
+          categories: selectedCategories.length ? selectedCategories.join(',') : undefined,
+          brands:     selectedBrands.length     ? selectedBrands.join(',')     : undefined,
+          priceMin:   priceRange[0],
+          priceMax:   priceRange[1],
+        },
       });
 
       setProducts(result.items);

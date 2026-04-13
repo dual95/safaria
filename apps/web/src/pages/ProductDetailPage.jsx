@@ -30,9 +30,8 @@ const ProductDetailPage = () => {
 
       if (productData.category) {
         const related = await pb.collection('products').getFullList({
-          filter: `category = "${productData.category}" && id != "${id}"`,
           sort: '-created',
-          $autoCancel: false
+          _params: { category: productData.category, excludeId: id },
         });
         setRelatedProducts(related.slice(0, 4));
       }
