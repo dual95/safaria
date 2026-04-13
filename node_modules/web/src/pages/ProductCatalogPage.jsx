@@ -31,7 +31,7 @@ const ProductCatalogPage = () => {
     fetchProducts();
   }, [page, searchQuery, selectedCategories, selectedBrands, priceRange]);
 
-  const fetchProducts = async () => {
+  const fetchProducts = async (retryCount = 0) => {
     setLoading(true);
     try {
       const result = await pb.collection('products').getList(page, perPage, {
@@ -40,10 +40,16 @@ const ProductCatalogPage = () => {
           search:     searchQuery || undefined,
           categories: selectedCategories.length ? selectedCategories.join(',') : undefined,
           brands:     selectedBrands.length     ? selectedBrands.join(',')     : undefined,
-          priceMin:   priceRange[0],
+          priceMin:   priceRange[0] > 0 ? priceRange[0] : undefined,
           priceMax:   priceRange[1],
         },
       });
+
+      // Si no hay productos en la primera carga y no hay filtros activos, reintentar una vez
+      if (result.items.length === 0 && retryCount === 0 && !searchQuery && selectedCategories.length === 0 && selectedBrands.length === 0) {
+        setTimeout(() => fetchProducts(1), 800);
+        return;
+      }
 
       setProducts(result.items);
       setTotalPages(result.totalPages);
@@ -65,6 +71,10 @@ const ProductCatalogPage = () => {
       }
     } catch (error) {
       console.error('Error fetching products:', error);
+      if (retryCount === 0) {
+        setTimeout(() => fetchProducts(1), 800);
+        return;
+      }
     } finally {
       setLoading(false);
     }
