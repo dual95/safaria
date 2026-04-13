@@ -18,7 +18,7 @@ app.use('/api/products', require('./routes/products'));
 app.use('/api/orders',   require('./routes/orders'));
 
 // ── Servir React build (producción) ─────────────────────────────────────
-const buildPath = path.join(__dirname, '..', '..', 'dist', 'apps', 'web');
+const buildPath = path.join(__dirname, '..', 'web', 'dist');
 app.use(express.static(buildPath));
 
 // SPA fallback – cualquier ruta no-API retorna index.html
