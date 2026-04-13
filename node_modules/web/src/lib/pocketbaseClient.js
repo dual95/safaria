@@ -48,6 +48,8 @@ async function fetchApi(path, options = {}) {
 }
 
 // ── Colecciones ────────────────────────────────────────────────────────────
+const normalizeProduct = (p) => p ? { ...p, price: parseFloat(p.price) || 0 } : p;
+
 const collections = {
   products: {
     // Retorna { items, totalPages, totalItems }
@@ -55,17 +57,19 @@ const collections = {
       const { sort = '-created', _params = {} } = options;
       const params = new URLSearchParams({ page, perPage, sort });
       Object.entries(_params).forEach(([k, v]) => { if (v !== undefined && v !== null && v !== '') params.set(k, v); });
-      return fetchApi(`/products?${params}`);
+      const data = await fetchApi(`/products?${params}`);
+      return { ...data, items: (data.items || []).map(normalizeProduct) };
     },
     // Retorna array plano
     async getFullList(options = {}) {
       const { sort = '-created', _params = {} } = options;
       const params = new URLSearchParams({ sort });
       Object.entries(_params).forEach(([k, v]) => { if (v !== undefined && v !== null && v !== '') params.set(k, v); });
-      return fetchApi(`/products/all?${params}`);
+      const data = await fetchApi(`/products/all?${params}`);
+      return Array.isArray(data) ? data.map(normalizeProduct) : data;
     },
     async getOne(id) {
-      return fetchApi(`/products/${id}`);
+      return normalizeProduct(await fetchApi(`/products/${id}`));
     },
     async delete(id) {
       return fetchApi(`/products/${id}`, { method: 'DELETE' });
