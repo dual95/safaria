@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import pb from '@/lib/pocketbaseClient';
 import Header from '@/components/Header';
 const HomePage = () => {
-  console.log('%c[SAFARIA BUILD] v2026-04-13-A', 'color: #22c55e; font-weight: bold; font-size: 14px');
+  console.log('%c[SAFARIA BUILD] v2026-04-13-B', 'color: #22c55e; font-weight: bold; font-size: 14px');
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
