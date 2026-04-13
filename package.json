@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently --kill-others --raw \"npm run dev --prefix apps/web\" \"npm run dev --prefix apps/api\"",
-    "build": "npm run build --prefix apps/web",
-    "postbuild": "npm install --prefix apps/api",
+    "build": "npm install --prefix apps/web && npm run build --prefix apps/web && npm install --prefix apps/api",
     "start": "node apps/api/server.js",
     "lint": "concurrently --raw \"npm run lint --prefix apps/web\""
   },
