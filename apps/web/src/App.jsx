@@ -12,6 +12,7 @@ import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import LoginPage from './pages/LoginPage';
 import AdminDashboard from './pages/AdminDashboard';
+import NosotrosPage from './pages/NosotrosPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/nosotros" element={<NosotrosPage />} />
           <Route path="/secure-admin-portal-x7k9" element={<LoginPage />} />
           <Route
             path="/admin"
