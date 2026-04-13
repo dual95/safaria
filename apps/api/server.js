@@ -18,33 +18,13 @@ app.use('/api/products', require('./routes/products'));
 app.use('/api/orders',   require('./routes/orders'));
 
 // ── Servir React build (producción) ─────────────────────────────────────
-const fs = require('fs');
-// Intentar múltiples rutas posibles del build
-const possibleBuildPaths = [
-  path.join(__dirname, '..', 'web', 'dist'),
-  path.join(__dirname, '..', '..', 'apps', 'web', 'dist'),
-  path.join(process.cwd(), 'apps', 'web', 'dist'),
-];
-let buildPath = possibleBuildPaths[0];
-for (const p of possibleBuildPaths) {
-  if (fs.existsSync(path.join(p, 'index.html'))) {
-    buildPath = p;
-    break;
-  }
-}
-console.log('Build path:', buildPath);
-console.log('index.html exists:', fs.existsSync(path.join(buildPath, 'index.html')));
-
+// Vite compila directamente aquí via outDir en vite.config.js
+const buildPath = path.join(__dirname, 'public');
 app.use(express.static(buildPath));
 
 // SPA fallback – cualquier ruta no-API retorna index.html
 app.get('*', (req, res) => {
-  const indexPath = path.join(buildPath, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).send('Build not found. Run npm run build first.');
-  }
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
 
 // ── Manejo de errores global ─────────────────────────────────────────────
