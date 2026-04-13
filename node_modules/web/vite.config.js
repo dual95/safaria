@@ -302,7 +302,7 @@ export default defineConfig({
 	},
 	build: {
 		outDir: path.resolve(__dirname, '../api/public'),
-		emptyOutDir: true,
+		emptyOutDir: false,
 		rollupOptions: {
 			external: [
 				'@babel/parser',
