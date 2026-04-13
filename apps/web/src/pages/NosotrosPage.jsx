@@ -9,43 +9,42 @@ import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/Header';
 
 // ─── DATOS DE SUCURSALES ──────────────────────────────────────────────
-// TODO: Agregar el número de teléfono de cada sucursal
 const SUCURSALES = [
   {
     nombre: 'Santa Elena',
     direccion: 'Walmart Santa Elena, Antiguo Cuscatlán',
     horario: 'Lunes a Domingo · 8:00 am – 7:00 pm',
-    telefono: null, // TODO: agregar teléfono
+    telefono: '+503 7560-3155',
   },
   {
     nombre: 'Blvd. Ejército',
     direccion: 'Walmart Blvd. Ejército, Soyapango',
     horario: 'Lunes a Domingo · 8:00 am – 7:00 pm',
-    telefono: null, // TODO: agregar teléfono
+    telefono: '+503 7869-5782',
   },
   {
     nombre: 'Escalón',
     direccion: 'Walmart Escalón, San Salvador',
     horario: 'Lunes a Domingo · 8:00 am – 7:00 pm',
-    telefono: null, // TODO: agregar teléfono
+    telefono: '+503 7744-8509',
   },
   {
     nombre: 'Lomas',
     direccion: 'Urb. Lomas de San Francisco, Calle 1, Antiguo Cuscatlán',
     horario: 'Lunes a Sábado · 8:00 am – 7:00 pm',
-    telefono: null, // TODO: agregar teléfono
+    telefono: '+503 7844-4620',
   },
   {
     nombre: 'Constitución',
     direccion: 'Walmart Constitución, San Salvador',
     horario: 'Lunes a Domingo · 8:00 am – 7:00 pm',
-    telefono: null, // TODO: agregar teléfono
+    telefono: '+503 7842-9887',
   },
   {
     nombre: 'Zona Rosa',
     direccion: 'Blvd. Hipódromo, Oppen Plaza, San Salvador',
     horario: 'Lunes a Domingo · 8:00 am – 7:00 pm',
-    telefono: null, // TODO: agregar teléfono
+    telefono: '+503 7624-9411',
   },
 ];
 
