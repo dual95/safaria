@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Minus, Plus } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Minus, Plus, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -205,6 +205,16 @@ const ProductDetailPage = () => {
                   <ShoppingCart className="h-5 w-5 mr-2" />
                   Agregar al carrito
                 </Button>
+
+                <a
+                  href={`https://wa.me/50370094444?text=${encodeURIComponent(`Hola SAFARIA! Me interesa este producto:\n\n*${product.name}*\nSKU: ${product.sku}\nPrecio: $${product.price.toFixed(2)}\n\n¿Podría darme más información?`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#1ebe57] text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 active:scale-[0.98] shadow-lg hover:shadow-xl text-base"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  Consultar por WhatsApp
+                </a>
               </div>
             </div>
           </div>
