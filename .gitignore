@@ -5,6 +5,9 @@ node_modules/
 apps/web/dist/
 dist/
 
+# Apache config not needed for Node.js/Express
+apps/api/public/.htaccess
+
 # Environment files
 .env
 .env.local

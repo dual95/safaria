@@ -8,6 +8,12 @@ Push-Location "$PSScriptRoot\apps\web"
 npx vite build
 Pop-Location
 
+# Eliminar .htaccess generado por Vite (no necesario en Node.js/Express)
+if (Test-Path "$PSScriptRoot\apps\api\public\.htaccess") {
+    Remove-Item "$PSScriptRoot\apps\api\public\.htaccess" -Force
+    Write-Host "  Eliminado: .htaccess" -ForegroundColor Yellow
+}
+
 Write-Host "Limpiando bundles viejos..." -ForegroundColor Cyan
 $keepJs  = (Get-ChildItem "$PSScriptRoot\apps\api\public\assets\*.js"  | Sort-Object LastWriteTime | Select-Object -Last 1).Name
 $keepCss = (Get-ChildItem "$PSScriptRoot\apps\api\public\assets\*.css" | Sort-Object LastWriteTime | Select-Object -Last 1).Name
