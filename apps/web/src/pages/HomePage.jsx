@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, Sparkles, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import pb from '@/lib/pocketbaseClient';
 import Header from '@/components/Header';
 const HomePage = () => {
-  console.log('%c[SAFARIA BUILD] v2026-04-13-B', 'color: #22c55e; font-weight: bold; font-size: 14px');
+  console.log('%c[SAFARIA BUILD] v2026-04-30-A', 'color: #22c55e; font-weight: bold; font-size: 14px');
+  const navigate = useNavigate();
+  const [searchValue, setSearchValue] = useState('');
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const q = searchValue.trim();
+    navigate(q ? `/catalog?q=${encodeURIComponent(q)}` : '/catalog');
+  };
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
@@ -69,6 +77,22 @@ const HomePage = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
+
+            <form onSubmit={handleSearch} className="flex gap-2 max-w-md mx-auto mt-6">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchValue}
+                  onChange={e => setSearchValue(e.target.value)}
+                  placeholder="Buscar productos..."
+                  className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/95 text-gray-800 placeholder:text-gray-400 border-0 focus:outline-none focus:ring-2 focus:ring-primary shadow-lg text-base"
+                />
+              </div>
+              <Button type="submit" className="shadow-lg px-6 font-semibold">
+                Buscar
+              </Button>
+            </form>
           </div>
         </section>
 
@@ -164,10 +188,12 @@ const HomePage = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-semibold mb-4">Legal</h3>
+                <h3 className="font-semibold mb-4">Síguenos</h3>
                 <ul className="space-y-2 text-sm">
-                  <li><span className="text-white/80">Política de privacidad</span></li>
-                  <li><span className="text-white/80">Términos de servicio</span></li>
+                  <li><a href="https://www.facebook.com/safaria.sv/" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors duration-200">Facebook</a></li>
+                  <li><a href="https://www.instagram.com/safaria.sv/" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors duration-200">Instagram</a></li>
+                  <li><a href="https://www.tiktok.com/@safaria.sv" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors duration-200">TikTok</a></li>
+                  <li><a href="https://wa.me/50370094444" target="_blank" rel="noopener noreferrer" className="text-white/80 hover:text-white transition-colors duration-200">WhatsApp: +503 7009-4444</a></li>
                 </ul>
               </div>
             </div>
