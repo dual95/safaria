@@ -111,7 +111,7 @@ const collections = {
 const files = {
   getUrl(record, filename) {
     if (!filename) return '';
-    if (filename.startsWith('http')) return filename;
+    if (filename.startsWith('http') || filename.startsWith('/')) return filename;
     return `/uploads/${filename}`;
   },
 };
