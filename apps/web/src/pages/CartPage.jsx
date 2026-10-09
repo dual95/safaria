@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
+import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from 'sonner';
@@ -85,6 +85,23 @@ const CartPage = () => {
   const subtotal = cartItems.reduce((sum, item) => sum + (item.currentPrice || item.price) * item.quantity, 0);
   const tax = subtotal * 0.12;
   const total = subtotal + tax;
+
+  const getWhatsAppOrderUrl = () => {
+    const lines = cartItems.map((item) => {
+      const price = item.currentPrice || item.price;
+      return `• ${item.name} (SKU: ${item.sku}) x${item.quantity} - $${(price * item.quantity).toFixed(2)}`;
+    });
+    const message = [
+      'Hola SAFARIA! Quisiera hacer el siguiente pedido:',
+      '',
+      ...lines,
+      '',
+      `Subtotal: $${subtotal.toFixed(2)}`,
+      `IVA (12%): $${tax.toFixed(2)}`,
+      `Total: $${total.toFixed(2)}`,
+    ].join('\n');
+    return `https://wa.me/50370094444?text=${encodeURIComponent(message)}`;
+  };
 
   if (loading) {
     return (
@@ -288,6 +305,15 @@ const CartPage = () => {
                         Proceder al pago
                         <ArrowRight className="ml-2 h-5 w-5" />
                       </Button>
+                      <a href={getWhatsAppOrderUrl()} target="_blank" rel="noopener noreferrer" className="block">
+                        <Button
+                          size="lg"
+                          className="w-full transition-all duration-200 active:scale-[0.98] shadow-lg hover:shadow-xl text-base font-semibold py-6 bg-[#25D366] hover:bg-[#1DA851] text-white"
+                        >
+                          <MessageCircle className="mr-2 h-5 w-5" />
+                          Ordenar por WhatsApp
+                        </Button>
+                      </a>
                       <Link to="/catalog">
                         <Button 
                           variant="outline" 
