@@ -29,9 +29,10 @@ router.get('/', async (req, res) => {
     const params     = [];
 
     // Búsqueda por texto
-    if (search) {
+    const searchTerms = typeof search === 'string' ? search.trim().split(/\s+/).filter(Boolean) : [];
+    for (const term of searchTerms) {
       conditions.push('(name LIKE ? OR sku LIKE ? OR description LIKE ?)');
-      const like = `%${search}%`;
+      const like = `%${term.replace(/[\\%_]/g, '\\$&')}%`;
       params.push(like, like, like);
     }
 
