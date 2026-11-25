@@ -68,10 +68,6 @@ const CheckoutPage = () => {
       newErrors.customer_city = 'La ciudad es requerida';
     }
 
-    if (!formData.customer_zip.trim()) {
-      newErrors.customer_zip = 'El código postal es requerido';
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -261,34 +257,18 @@ const CheckoutPage = () => {
                       )}
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="customer_city">Ciudad *</Label>
-                        <Input
-                          id="customer_city"
-                          name="customer_city"
-                          value={formData.customer_city}
-                          onChange={handleChange}
-                          className="text-foreground"
-                        />
-                        {errors.customer_city && (
-                          <p className="text-sm text-destructive mt-1">{errors.customer_city}</p>
-                        )}
-                      </div>
-
-                      <div>
-                        <Label htmlFor="customer_zip">Código postal *</Label>
-                        <Input
-                          id="customer_zip"
-                          name="customer_zip"
-                          value={formData.customer_zip}
-                          onChange={handleChange}
-                          className="text-foreground"
-                        />
-                        {errors.customer_zip && (
-                          <p className="text-sm text-destructive mt-1">{errors.customer_zip}</p>
-                        )}
-                      </div>
+                    <div>
+                      <Label htmlFor="customer_city">Ciudad *</Label>
+                      <Input
+                        id="customer_city"
+                        name="customer_city"
+                        value={formData.customer_city}
+                        onChange={handleChange}
+                        className="text-foreground"
+                      />
+                      {errors.customer_city && (
+                        <p className="text-sm text-destructive mt-1">{errors.customer_city}</p>
+                      )}
                     </div>
 
                     <Button
