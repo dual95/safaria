@@ -50,6 +50,19 @@ async function fetchApi(path, options = {}) {
 // ── Colecciones ────────────────────────────────────────────────────────────
 const normalizeProduct = (p) => p ? { ...p, price: parseFloat(p.price) || 0 } : p;
 
+const normalizeOrder = (order) => {
+  const amounts = {};
+  for (const field of ['subtotal', 'tax', 'total']) {
+    const value = order[field];
+    const amount = typeof value === 'number' || (typeof value === 'string' && value.trim() !== '')
+      ? Number(value)
+      : NaN;
+    if (!Number.isFinite(amount)) throw new Error(`Importe de orden inválido: ${field}`);
+    amounts[field] = amount;
+  }
+  return { ...order, ...amounts };
+};
+
 const collections = {
   products: {
     // Retorna { items, totalPages, totalItems }
@@ -84,7 +97,8 @@ const collections = {
   orders: {
     async getList(page, perPage, options = {}) {
       const { sort = '-created' } = options;
-      return fetchApi(`/orders?page=${page}&perPage=${perPage}&sort=${sort}`);
+      const data = await fetchApi(`/orders?page=${page}&perPage=${perPage}&sort=${sort}`);
+      return { ...data, items: data.items.map(normalizeOrder) };
     },
     async create(data) {
       return fetchApi('/orders', { method: 'POST', body: JSON.stringify(data) });
