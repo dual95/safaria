@@ -101,7 +101,7 @@ const LoginPage = () => {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="admin@safaria.com"
+                  placeholder="correo@ejemplo.com"
                   className="text-foreground"
                 />
                 {errors.email && (
@@ -134,12 +134,6 @@ const LoginPage = () => {
               </Button>
             </form>
 
-            <div className="mt-6 p-4 bg-gradient-to-br from-muted/50 to-muted/20 rounded-lg border border-border/50">
-              <p className="text-xs text-muted-foreground text-center">
-                Credenciales de prueba:<br />
-                <span className="font-mono text-foreground">admin@safaria.com</span> / <span className="font-mono text-foreground">admin123</span>
-              </p>
-            </div>
           </CardContent>
         </Card>
       </main>
